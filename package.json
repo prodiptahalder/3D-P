@@ -8,6 +8,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@react-three/cannon": "^5.0.1",
     "@react-three/drei": "^8.16.5",
     "@react-three/fiber": "^7.0.26",
     "gsap": "^3.9.1",
