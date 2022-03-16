@@ -10,7 +10,7 @@ export default function Three(){
         if(!!orbitControlsRef.current){
             const { x, y } = state.mouse;
             orbitControlsRef.current.setAzimuthalAngle(-angleToRadians(x * 90/* 90 cause I want 90 degrees of rotation */));
-            orbitControlsRef.current.setPolarAngle((y+0.5) * angleToRadians(60));
+            orbitControlsRef.current.setPolarAngle((y+1.2) * angleToRadians(60));
             orbitControlsRef.current.update();
         }
 
@@ -26,7 +26,7 @@ export default function Three(){
         <>
             {/* Camera */}
             <PerspectiveCamera makeDefault position={[0, 1, 10]}/>
-            <OrbitControls ref={orbitControlsRef} minPolarAngle={angleToRadians(60)} maxPolarAngle={angleToRadians(80)}/>
+            <OrbitControls ref={orbitControlsRef} minPolarAngle={angleToRadians(40)} maxPolarAngle={angleToRadians(80)}/>
 
             {/* Ball */}
             <mesh position={[0, 0.5, 0]}>
