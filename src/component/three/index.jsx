@@ -35,7 +35,7 @@ function Plane(){
     )
 }
 
-function Cube(props, x,y,z) {
+function Cube(props) {
     const [ref, api] = useBox(() => ({ mass: 1, position: [0, 5, 0], rotation: [0.4, 0.2, 0.5], ...props }))
     return (
       <mesh receiveShadow castShadow ref={ref}
@@ -66,16 +66,17 @@ function Ball(props){
 
 export default function Three(){
 
+    {/* The below code is for orbital controls to move as per mouse mmovement */}
     const orbitControlsRef = useRef(null);
-    useFrame((state) => {
-        if(!!orbitControlsRef.current){
-            const { x, y } = state.mouse;
-            orbitControlsRef.current.setAzimuthalAngle(-angleToRadians(x * 45/* 45 cause I want 90 degrees of rotation */));
-            orbitControlsRef.current.setPolarAngle((y+1.2) * angleToRadians(60));
-            orbitControlsRef.current.update();
-        }
+    // useFrame((state) => {
+    //     if(!!orbitControlsRef.current){
+    //         const { x, y } = state.mouse;
+    //         orbitControlsRef.current.setAzimuthalAngle(-angleToRadians(x * 45/* 45 cause I want 90 degrees of rotation */));
+    //         orbitControlsRef.current.setPolarAngle((y+1.2) * angleToRadians(60));
+    //         orbitControlsRef.current.update();
+    //     }
 
-    })
+    // })
 
 
     useEffect(()=>{
@@ -83,12 +84,13 @@ export default function Three(){
             console.log(orbitControlsRef.current);
         }
     },[orbitControlsRef.current])
+    
 
     return (
         <>
             {/* Camera */}
-            <PerspectiveCamera makeDefault position={[0, 5, -75]}/>
-            <OrbitControls ref={orbitControlsRef} minPolarAngle={angleToRadians(40)} maxPolarAngle={angleToRadians(80)}/>
+            <PerspectiveCamera makeDefault position={[0, 5, 75]} rotation={[angleToRadians(90), 0, 0]}/>
+            <OrbitControls ref={orbitControlsRef} minPolarAngle={angleToRadians(40)} maxPolarAngle={angleToRadians(80)} minAzimuthAngle={angleToRadians(5)}/>
             
             {/* Ambient light */}
             <ambientLight args={["#ffffff", 0.5]}/>
