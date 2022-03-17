@@ -6,7 +6,7 @@ import Three from './component/three';
 function App() {
 
   return (
-    <Canvas id="three-canvas-container" shadows>
+    <Canvas id="three-canvas-container" shadows fov={50}>
       <Suspense fallback={null}>
         <Three/>
       </Suspense>
