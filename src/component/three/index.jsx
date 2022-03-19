@@ -5,6 +5,7 @@ import { angleToRadians } from '../../utils/angle';
 import {Physics, usePlane, useSphere, Debug, useBox} from '@react-three/cannon';
 import * as THREE from 'three';
 import { MeshDepthMaterial } from 'three';
+import gsap from "gsap"; 
 
 
 function VerticalPlane(props){
@@ -51,7 +52,7 @@ function Cube(props) {
 function Ball(props){
 
     const [ref, api] = useSphere(()=>({ mass: 1, position: [0, 5, 0], ...props }));
-    
+
     return(
         <mesh
         onClick={()=>{
@@ -60,6 +61,33 @@ function Ball(props){
         ref={ref} castShadow receiveShadow>
             <sphereGeometry args={[1, 32, 32]}/>
             <meshPhongMaterial color="red" roughness={0.4}/>
+        </mesh>
+    );
+}
+
+function RollingBall(){
+
+    const ref = useRef(null);
+
+    useEffect(()=>{
+        if(!!ref.current){
+            console.log(ref.current.position);
+                gsap.to(ref.current.position, { 
+                    x:9,
+                    z:3,
+                    duration:5,
+                    ease: "bounce"
+                });
+        }
+    },[ref.current]);
+
+    return(
+        <mesh
+        mass={1}
+        position={[0,1,0]}
+        ref={ref} castShadow receiveShadow>
+            <sphereGeometry args={[1, 32, 32]}/>
+            <meshPhongMaterial color="#39AEA9" roughness={0.4}/>
         </mesh>
     );
 }
@@ -78,12 +106,6 @@ export default function Three(){
 
     // })
 
-
-    useEffect(()=>{
-        if(!!orbitControlsRef.current){
-            console.log(orbitControlsRef.current);
-        }
-    },[orbitControlsRef.current])
     
 
     return (
@@ -117,6 +139,7 @@ export default function Three(){
                 <VerticalPlane position={[0,10,-10]}/>
                 <Plane/>
                 <Ball position={[0, 5, 0]}/>
+                <RollingBall/>
                 <Cube position={[-5, 5, 2]} />
                 <Cube position={[0, 10, -4]} />
                 <Cube position={[3, 7, -2]} />
